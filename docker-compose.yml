@@ -1,7 +1,6 @@
-version: '3.9'
+version: "3.9"
 
 services:
-
   plex:
     image: plexinc/pms-docker
     container_name: plex
@@ -15,7 +14,7 @@ services:
       - ./content/media:/data/media
     network_mode: host
     # ports: # when network: bridge
-    #   - "32400:32400/tcp" 
+    #   - "32400:32400/tcp"
     #   - "8324:8324/tcp" # Required if network: bridge
     #   - "32469:32469/tcp" # Required if network: bridge
     #   - "1900:1900/udp" # Required if network: bridge
@@ -60,22 +59,6 @@ services:
     networks:
       - media-network
 
-  lidarr:
-    image: linuxserver/lidarr
-    container_name: lidarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Sofia
-    volumes:
-      - ./provision/lidarr:/config
-      - ./content:/data
-    ports:
-      - "8686:8686"
-    restart: unless-stopped
-    networks:
-      - media-network
-
   prowlarr:
     image: linuxserver/prowlarr
     container_name: prowlarr
@@ -87,22 +70,6 @@ services:
       - ./provision/prowlarr:/config
     ports:
       - 9696:9696
-    restart: unless-stopped
-    networks:
-      - media-network
-
-  bazarr:
-    image: linuxserver/bazarr
-    container_name: bazarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Sofia
-    volumes:
-      - ./provision/bazarr:/config
-      - ./content:/data
-    ports:
-      - "6767:6767"
     restart: unless-stopped
     networks:
       - media-network
@@ -119,53 +86,6 @@ services:
       - ./content/torrents:/data/torrents
     ports:
       - "8080:8080"
-    restart: unless-stopped
-    networks:
-      - media-network
-
-  jackett:
-    image: linuxserver/jackett
-    container_name: jackett
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Sofia
-    volumes:
-      - ./provision/jackett:/config
-    ports:
-      - "9117:9117"
-    restart: unless-stopped
-    networks:
-      - media-network
-
-  ombi:
-    image: linuxserver/ombi
-    container_name: ombi
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Sofia
-    volumes:
-      - ./provision/ombi:/config
-    ports:
-      - "3579:3579"
-    restart: unless-stopped
-    networks:
-      - media-network
-
-  heimdall:
-    image: linuxserver/heimdall
-    container_name: heimdall
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Sofia
-    volumes:
-      - ./provision/heimdall:/config
-    ports:
-      - "80:80"
-      - "443:443"
-      # - "8083:80"
     restart: unless-stopped
     networks:
       - media-network
